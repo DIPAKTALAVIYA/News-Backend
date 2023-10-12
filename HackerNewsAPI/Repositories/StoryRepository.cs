@@ -38,6 +38,8 @@ namespace HackerNewsAPI.Repositories
                 var storiesResponse = result.Content.ReadAsStringAsync().Result;
                 var storyIds = JsonConvert.DeserializeObject<List<int>>(storiesResponse);
 
+                storyIds = storyIds.Take(200).ToList();
+
                 var tasks = storyIds?.Select(GetStoryByIdAsync);
                 if (tasks != null)
                     stories = (await Task.WhenAll(tasks)).ToList();
