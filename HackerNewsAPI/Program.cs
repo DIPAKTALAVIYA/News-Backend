@@ -8,6 +8,9 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddTransient<IStoryRepository,StoryRepository>();
+builder.Services.AddHttpClient<IStoryRepository, StoryRepository>((client, sp) =>
+    ActivatorUtilities.CreateInstance<StoryRepository>(sp, client)
+);
 builder.Services.AddMemoryCache();
 
 builder.Services.AddCors(options =>
